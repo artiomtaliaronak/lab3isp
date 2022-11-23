@@ -17,27 +17,18 @@
 
     <br><br><br>
     <div class="container bg-black shadow-md p-5 form-layout">
+        <br>
+        <h3>Delete</h3>
+        <br>
         <form method="POST" autocomplete="off">
-
+            
             {% csrf_token %}
+            
+            <p> Confirm? </p>
 
-            {{form.username|as_crispy_field}}
+            <a href={% url 'viewtasks' %}>  No </a>
 
-            <br><br>
-
-            {{form.email|as_crispy_field}}
-
-            <br><br>
-
-            {{form.password1|as_crispy_field}}
-
-            <br><br>
-
-            {{form.password2|as_crispy_field}}
-
-            <br><br>
-
-            <input class="btn btn-primary navbar-btn"  type = "submit" value = "submit"/>
+            <input class="btn btn-primary navbar-btn"  type = "submit" value = "Yes"/>
 
 
         </form>

@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from .models import Task
-from .forms import TaskForm, CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, CreateTaskForm
 
 from django.contrib.auth.models import auth
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 
 from django.contrib.auth.decorators import login_required
+
+from .models import Task
 
 # Create your views here.
 
@@ -15,74 +16,82 @@ def home(request):
 
     return render(request, 'index.html')
 
-
 #CRUD-CREATE
+@login_required(login_url='login')
 def createTask(request):
-
-    form = TaskForm()
     
+    form = CreateTaskForm()
+
     if request.method == 'POST':
-        
-        form = TaskForm(request.POST)
+
+        form = CreateTaskForm(request.POST)
 
         if form.is_valid():
-            
-            form.save()
+
+            task = form.save(commit=False)
+
+            task.user = request.user
+
+            task.save()
 
             return redirect('viewtasks')
 
-
     context = {'form':form}
 
-    return render(request, 'createtask.html', context=context)
-
+    return render(request, 'profile/createtask.html', context=context)
 
 #CRUD-READ
+@login_required(login_url='login')
 def viewTasks(request):
     
-    tasks = Task.objects.all()
+    current_user = request.user.id
 
-    context = {'tasks': tasks}
+    task = Task.objects.all().filter(user=current_user)
 
-    return render(request, 'viewtasks.html', context=context)
+    context= {'task':task}
 
+    return render(request, 'profile/viewtasks.html', context=context)
 
 #CRUD-UPDATE
+@login_required(login_url='login')
 def updateTask(request, pk):
-    
+
     task = Task.objects.get(id=pk)
 
-    form = TaskForm(instance=task)
+    form = CreateTaskForm(instance=task)
 
     if request.method == 'POST':
 
-        form = TaskForm(request.POST, instance=task)
+        form = CreateTaskForm(request.POST, instance=task)
 
         if form.is_valid():
 
-            form.save()
+            task = form.save(commit=False)
+
+            task.user = request.user
+
+            task.save()
 
             return redirect('viewtasks')
 
     context = {'form':form}
 
-    return render(request, 'updatetask.html', context=context)
+    return render(request, 'profile/updatetask.html', context=context)
 
 
 #CRUD-DELETE
+@login_required(login_url='login')
 def deleteTask(request, pk):
-
+    
     task = Task.objects.get(id=pk)
 
     if request.method == 'POST':
-
+        
         task.delete()
 
         return redirect('viewtasks')
-
-    context = {'object': task}
-
-    return render(request, 'deletetask.html', context=context)
+    
+    return render(request, 'profile\deletetask.html')
 
 
 #USER-CREATE
@@ -104,7 +113,7 @@ def register(request):
 
     return render(request, 'register.html', context=context)
 
-
+#USER-LOGIN
 def login(request):
 
     form = LoginForm()
@@ -130,17 +139,18 @@ def login(request):
 
     return render(request, 'login.html', context=context)
 
-
+#USER-LOGOUT
 def logout(request):
 
     auth.logout(request)
 
     return redirect('')
 
+#DASHBOARD
 @login_required(login_url='login')
 def dashboard(request):
     
-    return render(request, 'dashboard.html')
+    return render(request, 'profile/dashboard.html')
 
 
 

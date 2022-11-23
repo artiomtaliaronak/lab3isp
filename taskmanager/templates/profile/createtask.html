@@ -17,26 +17,20 @@
 
     <br><br><br>
     <div class="container bg-black shadow-md p-5 form-layout">
+        <br>
+        <h3>Create</h3>
+        <br>
         <form method="POST" autocomplete="off">
-
+            
             {% csrf_token %}
 
-            {{form.username|as_crispy_field}}
-
+            {{form.title|as_crispy_field}}
+            <br><br>
+            
+            {{form.content|as_crispy_field}}
             <br><br>
 
-            {{form.email|as_crispy_field}}
-
-            <br><br>
-
-            {{form.password1|as_crispy_field}}
-
-            <br><br>
-
-            {{form.password2|as_crispy_field}}
-
-            <br><br>
-
+            <br>
             <input class="btn btn-primary navbar-btn"  type = "submit" value = "submit"/>
 
 

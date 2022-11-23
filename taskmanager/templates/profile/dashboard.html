@@ -1,6 +1,7 @@
 {% load static %}
 
 <html>
+
     <head>
 
         <meta charset="utf-8" />
@@ -14,15 +15,13 @@
     </head>
 
     <div class="container bg-black shadow-md p-5 form-layout">
-        <form method="POST" autocomplete="off">
-
-            {% csrf_token %}
-
-            {{form.as_p}}
-
-            <input class="btn btn-primary navbar-btn" type = "submit" value = "submit"/>
-
-        </form>
+        <h3> Dashboard </h3>
+        <br>
+        <a href={% url 'createtask' %}> Create task </a>
+        <br>
+        <a href={% url 'viewtasks' %}>  View tasks </a>
+        <br>
+        <a href={% url 'logout' %}> Logout </a>
     </div>
 
 </html>
