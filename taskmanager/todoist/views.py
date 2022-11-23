@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import Task
@@ -24,7 +24,7 @@ def createTask(request):
             
             form.save()
 
-            return HttpResponse('success')
+            return redirect('viewtasks')
 
 
     context = {'form':form}
@@ -40,6 +40,47 @@ def viewTasks(request):
     context = {'tasks': tasks}
 
     return render(request, 'viewtasks.html', context=context)
+
+
+#CRUD-UPDATE
+def updateTask(request, pk):
+    
+    task = Task.objects.get(id=pk)
+
+    form = TaskForm(instance=task)
+
+    if request.method == 'POST':
+
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('viewtasks')
+
+    context = {'form':form}
+
+    return render(request, 'updatetask.html', context=context)
+
+#CRUD-DELETE
+def deleteTask(request, pk):
+
+    task = Task.objects.get(id=pk)
+
+    if request.method == 'POST':
+
+        task.delete()
+
+        return redirect('viewtasks')
+
+    context = {'object': task}
+
+    return render(request, 'deletetask.html', context=context)
+
+    
+
+
 
 
 
