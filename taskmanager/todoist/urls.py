@@ -7,8 +7,17 @@ urlpatterns = [
 
     path('login', views.login),
 
-    path('taskform', views.createTask),
+    
 
     path('', views.home),
+
+
+    #CRUD
+
+    path('createtask', views.createTask),
+
+    path('viewtasks', views.viewTasks),
+
+    #path('readtasks', views.viewTasks),
 
 ]

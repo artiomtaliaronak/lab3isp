@@ -8,20 +8,38 @@ from .forms import TaskForm
 
 def home(request):
 
-    queryAllData = Task.objects.all()
-
-    context = {'tasks': queryAllData}
-
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html')
 
 
+#CRUD-CREATE
 def createTask(request):
 
     form = TaskForm()
     
-    context = {'form': form}
+    if request.method == 'POST':
+        
+        form = TaskForm(request.POST)
 
-    return render(request, 'taskform.html', context=context)
+        if form.is_valid():
+            
+            form.save()
+
+            return HttpResponse('success')
+
+
+    context = {'form':form}
+
+    return render(request, 'createtask.html', context=context)
+
+
+#CRUD-READ
+def viewTasks(request):
+    
+    tasks = Task.objects.all()
+
+    context = {'tasks': tasks}
+
+    return render(request, 'viewtasks.html', context=context)
 
 
 
