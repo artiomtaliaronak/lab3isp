@@ -1,16 +1,9 @@
 from django.urls import path
 from . import views
 
-urlpatterns = [
+urlpatterns = [    
 
-    path('register', views.register),
-
-    path('login', views.login),
-
-    
-
-    path('', views.home),
-
+    path('', views.home, name=''),
 
     #CRUD
 
@@ -22,6 +15,16 @@ urlpatterns = [
 
     path('deletetask/<str:pk>/', views.deleteTask, name='deletetask'),
 
+    #USERS
+
+    path('register', views.register, name='register'),
+
+    path('login', views.login, name='login'),
+
+    path('logout', views.logout, name='logout'),
+
+    path('dashboard', views.dashboard, name='dashboard')
+
     #path('readtasks', views.viewTasks),
 
-]
+] 
