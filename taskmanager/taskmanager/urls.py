@@ -15,35 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
 
 from django.http import HttpResponse
 
 
-def register(request):
 
-    return HttpResponse('This is the registration page')
-
-
-def login(request):
-
-    return HttpResponse('This is the login page')
-
-
-def home(request):
-
-    return HttpResponse('This is the home page')
 
 
 urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('register', register),
-
-    path('login', login),
-
-    path('', home),
+    path('', include('todoist.urls'))
 
 ]
+
 
 

@@ -1,0 +1,15 @@
+{% include 'base.html' %}
+
+<h2>
+    home Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis minima ipsam, in totam ratione consequatur magni cum necessitatibus nisi optio. Maiores voluptas magni dolor beatae veritatis eius nostrum, architecto magnam!
+</h2>
+
+{% for cl in client %}
+
+<p> {{ cl.id }} </p>
+<br>
+
+<p> {{ cl.name }} </p>
+<br>
+
+{% endfor %}
