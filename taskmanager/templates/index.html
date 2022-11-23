@@ -1,15 +1,19 @@
 {% include 'base.html' %}
 
-<h2>
-    home Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis minima ipsam, in totam ratione consequatur magni cum necessitatibus nisi optio. Maiores voluptas magni dolor beatae veritatis eius nostrum, architecto magnam!
-</h2>
+<h2> xxxxxxx </h2>
 
-{% for cl in client %}
+{% for task in tasks %}
 
-<p> {{ cl.id }} </p>
-<br>
+    <p> {{ task.id }} </p>
 
-<p> {{ cl.name }} </p>
-<br>
+    <br>
+
+    <p> {{ task.title }} </p>
+
+    <br>
+
+    <p> {{ task.content }} </p>
+
+    <br>
 
 {% endfor %}
