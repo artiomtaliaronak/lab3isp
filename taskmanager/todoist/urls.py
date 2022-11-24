@@ -25,6 +25,8 @@ urlpatterns = [
 
     path('dashboard', views.dashboard, name='dashboard'),
 
+    path('profilemanager', views.profileManager, name='profilemanager'),
+
 
     #path('readtasks', views.viewTasks),
 

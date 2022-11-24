@@ -13,6 +13,16 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class UpdateUserForm(forms.ModelForm):
+
+    password = None
+
+    class Meta:
+
+        model = User
+        fields = ['username', 'email']
+        exclude = ['password1', 'password2']
+
 
 class LoginForm(AuthenticationForm):
 
@@ -27,3 +37,4 @@ class CreateTaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'content']
         exclude = ['user']
+

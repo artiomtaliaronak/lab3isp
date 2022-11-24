@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from .forms import CreateUserForm, LoginForm, CreateTaskForm
+from .forms import CreateUserForm, LoginForm, CreateTaskForm, UpdateUserForm
 
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
@@ -10,10 +10,15 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Task
 
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename="logs.txt", level=logging.INFO)
+
 # Create your views here.
 
 def home(request):
-
+    logger.info('homepage opened')
     return render(request, 'index.html')
 
 #CRUD-CREATE
@@ -33,7 +38,7 @@ def createTask(request):
             task.user = request.user
 
             task.save()
-
+            logger.info('task created by {}' .format(request.user.username))
             return redirect('viewtasks')
 
     context = {'form':form}
@@ -49,7 +54,7 @@ def viewTasks(request):
     task = Task.objects.all().filter(user=current_user)
 
     context= {'task':task}
-
+    logger.info('tasks viewed by {}' .format(request.user.username))
     return render(request, 'profile/viewtasks.html', context=context)
 
 #CRUD-UPDATE
@@ -71,7 +76,7 @@ def updateTask(request, pk):
             task.user = request.user
 
             task.save()
-
+            logger.info('task updated by {}' .format(request.user.username))
             return redirect('viewtasks')
 
     context = {'form':form}
@@ -90,7 +95,7 @@ def deleteTask(request, pk):
         task.delete()
 
         return redirect('viewtasks')
-    
+    logger.info('task deleted by {}' .format(request.user.username))
     return render(request, 'profile\deletetask.html')
 
 
@@ -136,23 +141,41 @@ def login(request):
                 return redirect('dashboard')
 
     context = {'form':form}
-
+    logger.info('{} logged in' .format(request.user.username))
     return render(request, 'login.html', context=context)
 
 #USER-LOGOUT
 def logout(request):
 
     auth.logout(request)
-
+    logger.info('{} logged out' .format(request.user.username))
     return redirect('')
 
 #DASHBOARD
 @login_required(login_url='login')
 def dashboard(request):
-    
+    logger.info('{} opened dashboard' .format(request.user.username))
     return render(request, 'profile/dashboard.html')
 
 
+@login_required(login_url='login')
+def profileManager(request):
+    
+    if request.method == 'POST':
+
+        form = UpdateUserForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('dashboard')
+
+    form = UpdateUserForm(instance=request.user)        
+
+    context = {'form':form}
+    logger.info('{} updated profile' .format(request.user.username))
+    return render(request, 'profile\profilemanager.html', context=context)
 
 
 
