@@ -12,16 +12,26 @@
 
         <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
 
+        <title> Dashboard </title>
+
     </head>
 
+    {% include 'base.html' %}
+
+    <br><h3 class="text-center">Dashboard</h3><hr>
+
     <div class="container bg-black shadow-md p-5 form-layout">
-        <h3> Dashboard </h3>
+        <li class="nav-item">
+            <a class="btn btn-primary navbar-btn" type="button" href="{% url 'createtask' %}">Create Task</a>
+        </li>
         <br>
-        <a href={% url 'createtask' %}> Create task </a>
+        <li class="nav-item">
+            <a class="btn btn-primary navbar-btn" type="button" href="{% url 'viewtasks' %}">View Tasks</a>
+        </li>
         <br>
-        <a href={% url 'viewtasks' %}>  View tasks </a>
-        <br>
-        <a href={% url 'logout' %}> Logout </a>
+        <li class="nav-item">
+            <a class="btn btn-danger navbar-btn" type="button" href="{% url 'createtask' %}">Log out</a>
+        </li>
     </div>
 
 </html>

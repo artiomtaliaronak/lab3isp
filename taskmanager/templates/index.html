@@ -12,6 +12,8 @@
 
         <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
 
+        <title> todoist </title>
+
     </head>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
@@ -43,6 +45,10 @@
             &nbsp;&nbsp;&nbsp;
             <li class="nav-item">
                 <a class="btn btn-primary navbar-btn" type="button" href="{% url 'login' %}">login</a>
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="nav-item">
+              <a class="btn btn-primary navbar-btn" type="button" href="{% url 'dashboard' %}">dashboard</a>
             </li>
             &nbsp;&nbsp;&nbsp;
           </ul>
